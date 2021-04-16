@@ -34,3 +34,10 @@ hs_err_pid*
 /tarea2/FactorialUDP/build/
 /chatTCP/nbproject/private/
 /chatTCP/build/
+/tarea3/ChatSocket/nbproject/private/
+/tarea3/Chat/nbproject/private/
+/tarea3/chatTCPHilos/nbproject/private/
+/tarea3/chatTCPHilos/build/
+/tarea3/ServidorClienteMultihilos/nbproject/private/
+/tarea3/chatConsole/nbproject/private/
+/tarea3/chatConsole/build/
