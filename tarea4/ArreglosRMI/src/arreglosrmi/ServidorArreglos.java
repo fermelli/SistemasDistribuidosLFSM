@@ -48,8 +48,12 @@ public class ServidorArreglos extends UnicastRemoteObject implements IArreglos {
     }
 
     @Override
-    public int[] multiplicacion(int[] arreglo1, int[] arreglo2) {
-        return operacion("multiplicacion", arreglo1, arreglo2);
+    public int multiplicacion(int[] arreglo1, int[] arreglo2) {
+        int resultado = 0;
+        for (int i = 0; i < arreglo1.length; i++) {
+            resultado += arreglo1[i] * arreglo2[i];
+        }
+        return resultado;
     }
 
     public int[] operacion(String operacion, int[] arreglo1, int[] arreglo2) {
@@ -58,10 +62,8 @@ public class ServidorArreglos extends UnicastRemoteObject implements IArreglos {
         for (int i = 0; i < dimension; i++) {
             if (operacion == "suma") {
                 resultado[i] = arreglo1[i] + arreglo2[i];
-            } else if (operacion == "resta") {
-                resultado[i] = arreglo1[i] - arreglo2[i];
             } else {
-                resultado[i] = arreglo1[i] * arreglo2[i];
+                resultado[i] = arreglo1[i] - arreglo2[i];
             }
         }
         return resultado;

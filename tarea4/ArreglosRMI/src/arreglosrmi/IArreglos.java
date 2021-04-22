@@ -18,5 +18,5 @@ public interface IArreglos extends Remote {
 
     int[] resta(int[] arreglo1, int[] arreglo2) throws RemoteException;
 
-    int[] multiplicacion(int[] arreglo1, int[] arreglo2) throws RemoteException;
+    int multiplicacion(int[] arreglo1, int[] arreglo2) throws RemoteException;
 }

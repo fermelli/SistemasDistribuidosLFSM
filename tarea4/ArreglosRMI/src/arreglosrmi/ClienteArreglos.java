@@ -28,7 +28,8 @@ public class ClienteArreglos {
         int dimension;
         int[] arreglo1;
         int[] arreglo2;
-        int[] resultado;
+        int[] resultadoArreglo;
+        int resultado;
         int resp;
         try {
             do {
@@ -39,16 +40,16 @@ public class ClienteArreglos {
                 opcion = menu();
                 switch (opcion) {
                     case 1:
-                        resultado = operacionesArreglos.suma(arreglo1, arreglo2);
-                        imprimirArreglo(resultado);
+                        resultadoArreglo = operacionesArreglos.suma(arreglo1, arreglo2);
+                        imprimirArreglo(resultadoArreglo);
                         break;
                     case 2:
-                        resultado = operacionesArreglos.resta(arreglo1, arreglo2);
-                        imprimirArreglo(resultado);
+                        resultadoArreglo = operacionesArreglos.resta(arreglo1, arreglo2);
+                        imprimirArreglo(resultadoArreglo);
                         break;
                     case 3:
                         resultado = operacionesArreglos.multiplicacion(arreglo1, arreglo2);
-                        imprimirArreglo(resultado);
+                        System.out.print(String.format("El resultado de la multiplicación es: %d\n", resultado));
                         break;
                     default:
                         System.out.println("...Saliendo...");
