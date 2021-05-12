@@ -1,0 +1,7 @@
+{
+  "name": "rabbitmq/helloworld",
+  "description": "Replica de ejemplo Hello World con RabbitMQ",
+  "require": {
+      "php-amqplib/php-amqplib": ">=3.0"
+  }
+}
