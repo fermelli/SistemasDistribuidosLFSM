@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "kHz2JAonCs+ubgm2i02tmfhZr8IxmnubHNeXx068oFpUGjvkugbaopywYpi6GpWFOMOuBLgA7KbzdCENAIn3sQ==",
+  "success": true,
+  "projectFilePath": "D:\\Apuntes\\1-2021\\sistemas\\SIS258\\SistemasDistribuidosLFSM\\PracticasClase\\RabbitMQ\\C#-helloWorld\\Receive\\Receive.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\fermelli\\.nuget\\packages\\rabbitmq.client\\6.2.1\\rabbitmq.client.6.2.1.nupkg.sha512",
+    "C:\\Users\\fermelli\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
+    "C:\\Users\\fermelli\\.nuget\\packages\\system.threading.channels\\4.7.1\\system.threading.channels.4.7.1.nupkg.sha512"
+  ],
+  "logs": []
+}
