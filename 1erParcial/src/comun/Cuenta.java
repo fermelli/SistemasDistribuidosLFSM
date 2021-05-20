@@ -13,19 +13,14 @@ import java.io.Serializable;
  */
 public class Cuenta implements Serializable{
 
-    enum Banco {
-        BNB,
-        Banco_Mercantil,
-        Banco_BCP
-    }
-    String banco;
+    Banco banco;
     String nrocuenta;
     String ci;
     String nombres;
     String apellidos;
     double saldo;
 
-    public Cuenta(String nrocuenta, String ci, String nombres, String apellidos, double saldo, String banco) {
+    public Cuenta(String nrocuenta, String ci, String nombres, String apellidos, double saldo, Banco banco) {
         this.nrocuenta = nrocuenta;
         this.ci = ci;
         this.nombres = nombres;
@@ -74,11 +69,11 @@ public class Cuenta implements Serializable{
         this.saldo = saldo;
     }
     
-    public String getBanco() {
+    public Banco getBanco() {
         return banco;
     }
 
-    public void setBanco(String banco) {
+    public void setBanco(Banco banco) {
         this.banco = banco;
     }
 

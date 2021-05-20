@@ -5,6 +5,7 @@
  */
 package bnb;
 
+import comun.Banco;
 import comun.Cuenta;
 import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
@@ -44,16 +45,22 @@ public class ServidorBNB extends UnicastRemoteObject implements IOperacionesBNB 
         ArrayList<Cuenta> cuentas = new ArrayList<>();
         
         String ciValido = "11021654";
-        String nombresValidos = "Juan Perez";
-        String apellidosValidos = "Segovia";
+        String nombresValidos = "Juan";
+        String apellidosValidos = "Perez Segovia";
         
         if (ciValido.equals(ci) &&
             nombresValidos.equals(nombres) &&
             apellidosValidos.equals(apellidos)) {
-            cuentas.add(new Cuenta("4657657", ci, nombres, apellidos, 123.43, "Banco BNB"));
+            cuentas.add(new Cuenta("4657657", ci, nombres, apellidos, 123.43, Banco.BANCO_BNB));
         }
         
         return cuentas;
+    }
+
+    @Override
+    public boolean congelarMonto(double monto, Cuenta cuenta) throws RemoteException {
+        if("4657657".equals(cuenta.getNrocuenta())) return true;
+        return false;
     }
     
 }

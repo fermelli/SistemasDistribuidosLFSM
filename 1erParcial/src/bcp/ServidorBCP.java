@@ -45,13 +45,20 @@ public class ServidorBCP {
                 String[] datos = cadena[1].split("-");
 
                 String ciValido = "11021654";
-                String nombresValidos = "Juan Perez";
-                String apellidosValidos = "Segovia";
+                String nombresValidos = "Juan";
+                String apellidosValidos = "Perez Segovia";
 
                 String mensajeRespuesta;
                 if (comando.equals("Buscar")) {
                     if (datos[0].equals(ciValido) && datos[1].equals(nombresValidos) && datos[2].equals(apellidosValidos)) {
                         mensajeRespuesta = "657654-2534.32";
+                    } else {
+                        mensajeRespuesta = "error:datos";
+                    }
+                } else if(comando.equals("Congelar")) {
+                    String cuenta = datos[0];
+                    if(cuenta.equals("657654")) {
+                        mensajeRespuesta = "SI-657654";
                     } else {
                         mensajeRespuesta = "error:datos";
                     }

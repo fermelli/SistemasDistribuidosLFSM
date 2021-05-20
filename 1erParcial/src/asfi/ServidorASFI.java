@@ -6,6 +6,7 @@
 package asfi;
 
 import bnb.IOperacionesBNB;
+import comun.Banco;
 import comun.Cuenta;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -80,7 +81,7 @@ public class ServidorASFI extends UnicastRemoteObject implements IOperacionesCue
                     String[] data = subcadena.split("-");
                     String nroCuenta = data[0];
                     double saldo = Double.parseDouble(data[1]);
-                    Cuenta cuenta = new Cuenta(nroCuenta, ci, nombres, apellidos, saldo, "Banco Mercantil");
+                    Cuenta cuenta = new Cuenta(nroCuenta, ci, nombres, apellidos, saldo, Banco.BANCO_MERCANTIL);
 
                     cuentas.add(cuenta);
                 }
@@ -123,7 +124,7 @@ public class ServidorASFI extends UnicastRemoteObject implements IOperacionesCue
                     String[] data = subcadena.split("-");
                     String nroCuenta = data[0];
                     double saldo = Double.parseDouble(data[1]);
-                    Cuenta cuenta = new Cuenta(nroCuenta, ci, nombres, apellidos, saldo, "Banco BCP");
+                    Cuenta cuenta = new Cuenta(nroCuenta, ci, nombres, apellidos, saldo, Banco.BANCO_BCP);
 
                     cuentas.add(cuenta);
                 }
@@ -165,9 +166,102 @@ public class ServidorASFI extends UnicastRemoteObject implements IOperacionesCue
         return todasLasCuentas;
     }
 
+    public boolean retenerMontoBNB(double monto, Cuenta cuenta) {
+        IOperacionesBNB bnb;
+        try {
+            bnb = (IOperacionesBNB) Naming.lookup("rmi://localhost/bnb");
+            return bnb.congelarMonto(monto, cuenta);
+        } catch (MalformedURLException | NotBoundException | RemoteException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public boolean retenerMontoBCP(double monto, Cuenta cuenta) {
+        int port = 6789;
+        try {
+            String mensajeToServer = String.format("Congelar:%s-%s", cuenta.getNrocuenta(), monto);
+            String ip = "localhost";
+            DatagramSocket socketUDP = new DatagramSocket();
+            byte[] mensajeBytes = mensajeToServer.getBytes();
+            InetAddress hostServer = InetAddress.getByName(ip);
+
+            // Construimos un datagrama para enviar el mensaje al servidor
+            DatagramPacket request = new DatagramPacket(mensajeBytes, mensajeToServer.length(), hostServer, port);
+
+            // Enviamos el datagrama
+            socketUDP.send(request);
+
+            // Construimos el DatagramPacket que contendrá la respuesta
+            byte[] bufer = new byte[1000];
+            DatagramPacket response = new DatagramPacket(bufer, bufer.length);
+            socketUDP.receive(response);
+
+            // Enviamos la respuesta del servidor a la salida estandar
+            String[] cadena = new String(response.getData()).split("-");
+
+            if (!"error".equals(cadena[0]) && !"".equals(cadena[0])) {
+                if (cadena[0].equals("SI")) {
+                    return true;
+                }
+
+                if (cadena[0].equals("NO")) {
+                    return false;
+                }
+            }
+
+            // Cerramos el socket
+            socketUDP.close();
+
+        } catch (SocketException e) {
+            System.out.println("Socket: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean retenerMontoMercantil(double monto, Cuenta cuenta) {
+        int port = 5001;
+        Socket client;
+        try {
+            client = new Socket("localhost", port);
+            PrintStream toServer = new PrintStream(client.getOutputStream());
+            BufferedReader fromServer = new BufferedReader(new InputStreamReader(client.getInputStream()));
+
+            toServer.println("Congelar:" + String.format("%s-%s", cuenta.getNrocuenta(), monto));
+            String mensajeDesdeServidor = fromServer.readLine();
+            String[] cadena = mensajeDesdeServidor.split("-");
+
+            if (!"error".equals(cadena[0]) && !"".equals(cadena[0])) {
+                if (cadena[0].equals("SI")) {
+                    return true;
+                }
+
+                if (cadena[0].equals("NO")) {
+                    return false;
+                }
+            }
+
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+
+        return false;
+    }
+
     @Override
     public boolean RetenerMonto(Cuenta cuenta, double monto, String glosa) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch (cuenta.getBanco()) {
+            case BANCO_BNB:
+                return retenerMontoBNB(monto, cuenta);
+            case BANCO_MERCANTIL:
+                return retenerMontoMercantil(monto, cuenta);
+            case BANCO_BCP:
+                return retenerMontoBCP(monto, cuenta);
+            default:
+                return false;
+        }
     }
 
 }

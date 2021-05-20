@@ -17,4 +17,6 @@ import java.util.ArrayList;
 public interface IOperacionesBNB  extends Remote {
 
     ArrayList<Cuenta> obtenerSaldo(String ci, String nombres, String apellidos) throws RemoteException;
+    
+    boolean congelarMonto(double monto, Cuenta cuenta) throws RemoteException;
 }

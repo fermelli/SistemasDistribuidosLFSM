@@ -26,6 +26,7 @@ public class ClienteJuez {
     public static void main(String[] args) {
         IOperacionesCuenta asfi;
         try {
+            System.out.println("--- DATOS ---");
             Scanner sc = new Scanner(System.in);
             System.out.print("C.I.: ");
             String ci = sc.nextLine();
@@ -35,10 +36,28 @@ public class ClienteJuez {
             String apellidos = sc.nextLine();
             asfi = (IOperacionesCuenta) Naming.lookup("rmi://localhost/asfi");
             ArrayList<Cuenta> cuentas = asfi.ListarCuentas(ci, nombres, apellidos);
+            
+            System.out.println("--- SELECCIONA UNA CUENTA ---");
+            int i = 0;
             for (Cuenta cuenta : cuentas) {
-                System.out.println(String.format("Banco: ", cuenta.getBanco()));
-                System.out.println(String.format("N° Cuenta: ", cuenta.getNrocuenta()));
-                System.out.println(String.format("Saldo: ", cuenta.getSaldo()));
+                i++;
+                System.out.println(i + ". CUENTA");
+                System.out.println(String.format("\tBanco: %s", cuenta.getBanco()));
+                System.out.println(String.format("\tN° Cuenta: %s", cuenta.getNrocuenta()));
+                System.out.println(String.format("\tSaldo: %s", cuenta.getSaldo()));
+            }
+            System.out.print("Elegir cuenta: ");
+            int opcion = sc.nextInt();
+            Cuenta cuentaSeleccionada = cuentas.get(opcion - 1);
+            System.out.print("Glosa: ");
+            String glosa = sc.next();
+            System.out.print("Monto a retener: ");
+            double monto = sc.nextDouble();
+            boolean respuesta = asfi.RetenerMonto(cuentaSeleccionada, monto, glosa);
+            if (respuesta) {
+                System.out.println("¡Transaccion con exito!");
+            } else {
+                System.out.println("¡No se pudo hacer la retención!");
             }
         } catch (MalformedURLException | NotBoundException | RemoteException e) {
             System.out.println(e);

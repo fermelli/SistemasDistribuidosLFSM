@@ -37,20 +37,23 @@ public class ServidorMercantil {
                 String messageToClient = "";
 
                 String ciValido = "11021654";
-                String nombresValidos = "Juan Perez";
-                String apellidosValidos = "Segovia";
-
-                String ci = datos[0];
-                String nombres = datos[1];
-                String apellidos = datos[2];
+                String nombresValidos = "Juan";
+                String apellidosValidos = "Perez Segovia";
 
                 if (comando.equals("Buscar")) {
-                    if (ciValido.equals(ci)
-                        && nombresValidos.equals(nombres)
-                        && apellidosValidos.equals(apellidos)) {
+                    if (ciValido.equals(datos[0])
+                        && nombresValidos.equals(datos[1])
+                        && apellidosValidos.equals(datos[2])) {
                         messageToClient = "";
                     } else {
                         messageToClient = "error:datos"; //consultaria una BD
+                    }
+                }  else if(comando.equals("Congelar")) {
+                    String cuenta = datos[0];
+                    if(cuenta.equals("#####")) {
+                        messageToClient = "SI-#####";
+                    } else {
+                        messageToClient = "error:datos";
                     }
                 } else {
                     messageToClient = "error:comando";
