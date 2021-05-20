@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bcp;
 
 import java.io.IOException;
@@ -21,6 +16,7 @@ public class ServidorBCP {
      */
     public static void main(String[] args) {
         int port = 6789;
+        DatabaseBcp dbBcp = new DatabaseBcp("bd_bcp", "localhost", 27017, "", "");
         try {
 
             DatagramSocket socketUDP = new DatagramSocket(port);
@@ -44,26 +40,25 @@ public class ServidorBCP {
                 String comando = cadena[0];
                 String[] datos = cadena[1].split("-");
 
-                String ciValido = "11021654";
-                String nombresValidos = "Juan";
-                String apellidosValidos = "Perez Segovia";
-
                 String mensajeRespuesta;
-                if (comando.equals("Buscar")) {
-                    if (datos[0].equals(ciValido) && datos[1].equals(nombresValidos) && datos[2].equals(apellidosValidos)) {
-                        mensajeRespuesta = "657654-2534.32";
-                    } else {
-                        mensajeRespuesta = "error:datos";
-                    }
-                } else if(comando.equals("Congelar")) {
-                    String cuenta = datos[0];
-                    if(cuenta.equals("657654")) {
-                        mensajeRespuesta = "SI-657654";
-                    } else {
-                        mensajeRespuesta = "error:datos";
-                    }
-                } else {
-                    mensajeRespuesta = "error:comando";
+                switch (comando) {
+                    case "Buscar":
+                        String ci = datos[0];
+                        String nombres = datos[1];
+                        String apellidos = datos[2];
+                        mensajeRespuesta = dbBcp.obtenerCadenaCuentasCliente(ci, nombres, apellidos);
+                        break;
+                    case "Congelar":
+                        String nroCuenta = datos[0];
+                        double monto = Double.parseDouble(datos[1]);
+                        if (dbBcp.congelarMonto(nroCuenta, monto)) {
+                            mensajeRespuesta = "si-" + nroCuenta;
+                        } else {
+                            mensajeRespuesta = "no-no encontrado";
+                        }
+                    default:
+                        mensajeRespuesta = "error:comando";
+                        break;
                 }
                 byte[] mensajeBytes = mensajeRespuesta.getBytes();
 

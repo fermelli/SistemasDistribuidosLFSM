@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package comun;
 
 import java.io.Serializable;
@@ -11,30 +6,22 @@ import java.io.Serializable;
  *
  * @author fermelli
  */
-public class Cuenta implements Serializable{
+public class Cuenta implements Serializable {
 
-    Banco banco;
-    String nrocuenta;
     String ci;
     String nombres;
     String apellidos;
+    String nrocuenta;
     double saldo;
+    Banco banco;
 
-    public Cuenta(String nrocuenta, String ci, String nombres, String apellidos, double saldo, Banco banco) {
-        this.nrocuenta = nrocuenta;
+    public Cuenta(String ci, String nombres, String apellidos, String nrocuenta, double saldo, Banco banco) {
         this.ci = ci;
         this.nombres = nombres;
         this.apellidos = apellidos;
+        this.nrocuenta = nrocuenta;
         this.saldo = saldo;
         this.banco = banco;
-    }
-
-    public String getNrocuenta() {
-        return nrocuenta;
-    }
-
-    public void setNrocuenta(String nrocuenta) {
-        this.nrocuenta = nrocuenta;
     }
 
     public String getCi() {
@@ -61,6 +48,14 @@ public class Cuenta implements Serializable{
         this.apellidos = apellidos;
     }
 
+    public String getNrocuenta() {
+        return nrocuenta;
+    }
+
+    public void setNrocuenta(String nrocuenta) {
+        this.nrocuenta = nrocuenta;
+    }
+
     public double getSaldo() {
         return saldo;
     }
@@ -68,7 +63,7 @@ public class Cuenta implements Serializable{
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
-    
+
     public Banco getBanco() {
         return banco;
     }
@@ -76,5 +71,4 @@ public class Cuenta implements Serializable{
     public void setBanco(Banco banco) {
         this.banco = banco;
     }
-
 }

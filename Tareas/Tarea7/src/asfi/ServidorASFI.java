@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package asfi;
 
 import bnb.IOperacionesBNB;
@@ -74,9 +69,9 @@ public class ServidorASFI extends UnicastRemoteObject implements IOperacionesCue
 
             toServer.println("Buscar:" + String.format("%s-%s-%s", ci, nombres, apellidos));
             String mensajeDesdeServidor = fromServer.readLine();
-            String[] cadena = mensajeDesdeServidor.split(":");
 
-            if (!"error".equals(cadena[0]) && !"".equals(cadena[0])) {
+            if (!"".equals(mensajeDesdeServidor)) {
+                String[] cadena = mensajeDesdeServidor.split(":");
                 for (String subcadena : cadena) {
                     String[] data = subcadena.split("-");
                     String nroCuenta = data[0];
@@ -116,10 +111,11 @@ public class ServidorASFI extends UnicastRemoteObject implements IOperacionesCue
             DatagramPacket response = new DatagramPacket(bufer, bufer.length);
             socketUDP.receive(response);
 
-            // Enviamos la respuesta del servidor a la salida estandar
-            String[] cadena = new String(response.getData()).split(":");
+            String mensajeDesdeServidor = new String(response.getData());
 
-            if (!"error".equals(cadena[0]) && !"".equals(cadena[0])) {
+            if (!"".equals(mensajeDesdeServidor)) {
+                // Enviamos la respuesta del servidor a la salida estandar
+                String[] cadena = mensajeDesdeServidor.split(":");
                 for (String subcadena : cadena) {
                     String[] data = subcadena.split("-");
                     String nroCuenta = data[0];
@@ -166,18 +162,18 @@ public class ServidorASFI extends UnicastRemoteObject implements IOperacionesCue
         return todasLasCuentas;
     }
 
-    public boolean retenerMontoBNB(double monto, Cuenta cuenta) {
+    public boolean retenerMontoBNB(Cuenta cuenta, double monto) {
         IOperacionesBNB bnb;
         try {
             bnb = (IOperacionesBNB) Naming.lookup("rmi://localhost/bnb");
-            return bnb.congelarMonto(monto, cuenta);
+            return bnb.congelarMonto(cuenta, monto);
         } catch (MalformedURLException | NotBoundException | RemoteException e) {
             System.out.println(e);
         }
         return false;
     }
 
-    public boolean retenerMontoBCP(double monto, Cuenta cuenta) {
+    public boolean retenerMontoBCP(Cuenta cuenta, double monto) {
         int port = 6789;
         try {
             String mensajeToServer = String.format("Congelar:%s-%s", cuenta.getNrocuenta(), monto);
@@ -201,11 +197,11 @@ public class ServidorASFI extends UnicastRemoteObject implements IOperacionesCue
             String[] cadena = new String(response.getData()).split("-");
 
             if (!"error".equals(cadena[0]) && !"".equals(cadena[0])) {
-                if (cadena[0].equals("SI")) {
+                if (cadena[0].equals("si")) {
                     return true;
                 }
 
-                if (cadena[0].equals("NO")) {
+                if (cadena[0].equals("no")) {
                     return false;
                 }
             }
@@ -221,7 +217,7 @@ public class ServidorASFI extends UnicastRemoteObject implements IOperacionesCue
         return false;
     }
 
-    public boolean retenerMontoMercantil(double monto, Cuenta cuenta) {
+    public boolean retenerMontoMercantil(Cuenta cuenta, double monto) {
         int port = 5001;
         Socket client;
         try {
@@ -234,11 +230,11 @@ public class ServidorASFI extends UnicastRemoteObject implements IOperacionesCue
             String[] cadena = mensajeDesdeServidor.split("-");
 
             if (!"error".equals(cadena[0]) && !"".equals(cadena[0])) {
-                if (cadena[0].equals("SI")) {
+                if (cadena[0].equals("si")) {
                     return true;
                 }
 
-                if (cadena[0].equals("NO")) {
+                if (cadena[0].equals("no")) {
                     return false;
                 }
             }
@@ -254,11 +250,11 @@ public class ServidorASFI extends UnicastRemoteObject implements IOperacionesCue
     public boolean RetenerMonto(Cuenta cuenta, double monto, String glosa) {
         switch (cuenta.getBanco()) {
             case BANCO_BNB:
-                return retenerMontoBNB(monto, cuenta);
+                return retenerMontoBNB(cuenta, monto);
             case BANCO_MERCANTIL:
-                return retenerMontoMercantil(monto, cuenta);
+                return retenerMontoMercantil(cuenta, monto);
             case BANCO_BCP:
-                return retenerMontoBCP(monto, cuenta);
+                return retenerMontoBCP(cuenta, monto);
             default:
                 return false;
         }
