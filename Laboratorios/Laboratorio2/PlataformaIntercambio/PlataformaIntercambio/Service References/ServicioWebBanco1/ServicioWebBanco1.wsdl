@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="Retirar">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idCliente" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="monto" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RetirarResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RetirarResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Abonar">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idCliente" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="monto" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AbonarResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AbonarResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarSaldo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idCliente" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarSaldoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ConsultarSaldoResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RetirarSoapIn">
+    <wsdl:part name="parameters" element="tns:Retirar" />
+  </wsdl:message>
+  <wsdl:message name="RetirarSoapOut">
+    <wsdl:part name="parameters" element="tns:RetirarResponse" />
+  </wsdl:message>
+  <wsdl:message name="AbonarSoapIn">
+    <wsdl:part name="parameters" element="tns:Abonar" />
+  </wsdl:message>
+  <wsdl:message name="AbonarSoapOut">
+    <wsdl:part name="parameters" element="tns:AbonarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarSaldoSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultarSaldo" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarSaldoSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultarSaldoResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ServicioWebBanco1Soap">
+    <wsdl:operation name="Retirar">
+      <wsdl:input message="tns:RetirarSoapIn" />
+      <wsdl:output message="tns:RetirarSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Abonar">
+      <wsdl:input message="tns:AbonarSoapIn" />
+      <wsdl:output message="tns:AbonarSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSaldo">
+      <wsdl:input message="tns:ConsultarSaldoSoapIn" />
+      <wsdl:output message="tns:ConsultarSaldoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServicioWebBanco1Soap" type="tns:ServicioWebBanco1Soap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Retirar">
+      <soap:operation soapAction="http://tempuri.org/Retirar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Abonar">
+      <soap:operation soapAction="http://tempuri.org/Abonar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSaldo">
+      <soap:operation soapAction="http://tempuri.org/ConsultarSaldo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServicioWebBanco1Soap12" type="tns:ServicioWebBanco1Soap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Retirar">
+      <soap12:operation soapAction="http://tempuri.org/Retirar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Abonar">
+      <soap12:operation soapAction="http://tempuri.org/Abonar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSaldo">
+      <soap12:operation soapAction="http://tempuri.org/ConsultarSaldo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServicioWebBanco1">
+    <wsdl:port name="ServicioWebBanco1Soap" binding="tns:ServicioWebBanco1Soap">
+      <soap:address location="http://localhost:1061/ServicioWebBanco1.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServicioWebBanco1Soap12" binding="tns:ServicioWebBanco1Soap12">
+      <soap12:address location="http://localhost:1061/ServicioWebBanco1.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

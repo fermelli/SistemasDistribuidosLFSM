@@ -19,6 +19,18 @@
 *.tar.gz
 *.rar
 
+# Build results C#
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /Fibonacci/nbproject/private/
@@ -74,3 +86,6 @@ hs_err_pid*
 /Tareas/Tarea7/build/
 /ClienteOperacionesJava/nbproject/private/
 /ClienteOperacionesJava/build/
+/ClienteServicioWebJava/nbproject/private/
+/ClienteServicioWebJava/build/
+/ClienteServicioWebJava/dist/
