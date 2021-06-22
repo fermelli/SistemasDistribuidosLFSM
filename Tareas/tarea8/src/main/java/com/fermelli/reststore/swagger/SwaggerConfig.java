@@ -28,7 +28,7 @@ public class SwaggerConfig {
     private ApiInfo apiEndPointsInfo() {
 
         return new ApiInfoBuilder().title("Spring Boot REST API - STORE modified by fermelli")
-                .description("Tarea 6 API REST - API REST para una base de datos 'tienda' con los recursos: productos, usuarios y login")
+                .description("Tarea 6 API REST - API REST para una base de datos 'tienda' con los recursos: productos y usuarios")
                 .contact(new Contact("Luis Fernando Salgado Miguez", "https://github.com/fermelli", "luisfernandosalgadomiguez@gmail.com"))
                 .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")

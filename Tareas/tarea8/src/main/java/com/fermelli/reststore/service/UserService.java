@@ -71,5 +71,9 @@ public class UserService {
             return null;
         }
     }
-    
+
+    public String login(String email, String password) {
+        return "JSON Web Token";
+    }
+
 }
